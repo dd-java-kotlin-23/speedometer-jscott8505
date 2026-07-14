@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "13229152975",
+    "project_id": "dd-23-53aae",
+    "storage_bucket": "dd-23-53aae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13229152975:android:17486593edc9547b4775ba",
+        "android_client_info": {
+          "package_name": "edu.cnm.deepdive.deepdiveevents"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8LvSuadgRX9Wo_1LDdQO4_Da3JVA_VcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13229152975:android:d20b8d8b1bf79b294775ba",
+        "android_client_info": {
+          "package_name": "edu.cnm.deepdive.speedometerfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8LvSuadgRX9Wo_1LDdQO4_Da3JVA_VcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

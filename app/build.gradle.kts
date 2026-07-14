@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.schema.parser)
     alias(libs.plugins.junit)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -55,10 +56,9 @@ android {
             )
         }
     }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.valueOf("VERSION_${libs.versions.java.get()}")
-        targetCompatibility = JavaVersion.valueOf("VERSION_${libs.versions.java.get()}")
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     buildFeatures {
@@ -94,6 +94,11 @@ ksp {
 }
 
 dependencies {
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.16.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
 
     // .jar-based libraries included in project
 

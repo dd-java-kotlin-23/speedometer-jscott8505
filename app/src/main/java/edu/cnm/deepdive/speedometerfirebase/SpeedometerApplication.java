@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.myproject;
+package edu.cnm.deepdive.speedometerfirebase;
 
 import android.app.Application;
 import dagger.hilt.android.HiltAndroidApp;
@@ -24,7 +24,7 @@ import dagger.hilt.android.HiltAndroidApp;
  * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.
  */
 @HiltAndroidApp
-public class MyProjectApplication extends Application { // TODO Rename this class as aappropriate.
+public class SpeedometerApplication extends Application {
 
   @Override
   public void onCreate() {

@@ -22,4 +22,6 @@ plugins {
     alias(libs.plugins.dokka).apply(false)
     alias(libs.plugins.schema.parser).apply(false)
     alias(libs.plugins.junit).apply(false)
+
+    id("com.google.gms.google-services").version("4.5.0").apply(false)
 }
