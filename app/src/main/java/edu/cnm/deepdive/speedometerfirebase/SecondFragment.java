@@ -4,17 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import dagger.hilt.android.AndroidEntryPoint;
+import edu.cnm.deepdive.speedometerfirebase.adapter.SubmissionAdapter;
 import edu.cnm.deepdive.speedometerfirebase.databinding.FragmentSecondBinding;
 import edu.cnm.deepdive.speedometerfirebase.viewmodel.SecondFragmentViewModel;
 
@@ -54,32 +51,17 @@ public class SecondFragment extends Fragment {
       secondFragmentViewModel.signOut();
     });
 
+    SubmissionAdapter adapter = new SubmissionAdapter(requireContext());
+    binding.historyRecyclerView.setAdapter(adapter);
+
     secondFragmentViewModel.getAllSubmissions().observe(getViewLifecycleOwner(), (userSubmissions) -> {
-          binding.historyRecyclerView.setAdapter(new Adapter() {
-            @NonNull
-            @Override
-            public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-              View historyRow = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.activity_list_item, parent, false);
-              return new ViewHolder(historyRow){
-              };
-            }
+      adapter.submitList(userSubmissions);
+    });
 
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-              ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(userSubmissions.get(position).getSpeed());
-            }
-
-            @Override
-            public int getItemCount() {
-              return userSubmissions.size();
-            }
-          });
-        });
-
-        binding.submitButton.setOnClickListener((v) -> {
-          int speedValue = Integer.parseInt(binding.speedNumber.getText().toString());
-          secondFragmentViewModel.addSubmission(speedValue);
-        });
+    binding.submitButton.setOnClickListener((v) -> {
+      int speedValue = Integer.parseInt(binding.speedNumber.getText().toString());
+      secondFragmentViewModel.addSubmission(speedValue);
+    });
   }
 
   @Override

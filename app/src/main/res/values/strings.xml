@@ -12,4 +12,5 @@
   <string name="log_out">Log out</string>
   <string name="logged_in_as">Logged in as: %s</string>
   <string name="submit_speed">Submit Speed</string>
+  <string name="speed_format">%1$d mph</string>
 </resources>
