@@ -3,6 +3,7 @@ package edu.cnm.deepdive.speedometerfirebase.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
@@ -13,6 +14,8 @@ import edu.cnm.deepdive.speedometerfirebase.databinding.ItemSubmissionBinding;
 import edu.cnm.deepdive.speedometerfirebase.model.UserSubmission;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * RecyclerView adapter for displaying user speed submissions.
@@ -22,6 +25,7 @@ public class SubmissionAdapter extends ListAdapter<UserSubmission, SubmissionAda
 
   private final LayoutInflater inflater;
   private final OnSubmissionClickListener clickListener;
+  private final Set<String> animatedIds = new HashSet<>();
 
   /**
    * Constructs the adapter with a context and an optional click listener.
@@ -67,7 +71,7 @@ public class SubmissionAdapter extends ListAdapter<UserSubmission, SubmissionAda
   /**
    * ViewHolder class that encapsulates the view binding and binding logic for each item.
    */
-  class Holder extends RecyclerView.ViewHolder {
+  public class Holder extends RecyclerView.ViewHolder {
 
     private final ItemSubmissionBinding binding;
     private final DateFormat dateFormat;
@@ -78,11 +82,29 @@ public class SubmissionAdapter extends ListAdapter<UserSubmission, SubmissionAda
       this.dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
     }
 
-    void bind(UserSubmission submission) {
+    public void bind(UserSubmission submission) {
       Context context = itemView.getContext();
 
-      // Display the formatted speed
-      binding.speedValue.setText(context.getString(R.string.speed_format, submission.getSpeed()));
+      // Determine description based on speed value (1 to 10)
+      int speedValue = submission.getSpeed();
+      String description;
+      if (speedValue == 1) {
+        description = context.getString(R.string.too_slow);
+      } else if (speedValue < 5) {
+        description = context.getString(R.string.slow);
+      } else if (speedValue == 5) {
+        description = context.getString(R.string.just_right);
+      } else if (speedValue < 10) {
+        description = context.getString(R.string.fast);
+      } else {
+        description = context.getString(R.string.too_fast);
+      }
+
+      // Display the formatted speed description (e.g. "Speed: 5/10 (Just Right)")
+      binding.speedValue.setText(context.getString(R.string.speed_history_format, speedValue, description));
+
+      // Update the progress bar to mirror the speed value
+      binding.speedBar.setProgress(speedValue);
 
       // Format and display the timestamp (handling null gracefully)
       Date timestamp = submission.getTimestamp();
@@ -95,6 +117,24 @@ public class SubmissionAdapter extends ListAdapter<UserSubmission, SubmissionAda
       // Hook up the click listener if provided
       if (clickListener != null) {
         itemView.setOnClickListener(v -> clickListener.onSubmissionClick(submission));
+      }
+
+      // Entrance animation for newly added items
+      String submissionId = submission.getId();
+      if (submissionId != null && !animatedIds.contains(submissionId)) {
+        animatedIds.add(submissionId);
+        itemView.setAlpha(0f);
+        itemView.setTranslationY(-30f); // Subtle drop-down from top
+        itemView.animate()
+            .alpha(1f)
+            .translationY(0f)
+            .setDuration(400)
+            .setInterpolator(new DecelerateInterpolator())
+            .start();
+      } else {
+        // Essential to reset view properties on recycled viewholders
+        itemView.setAlpha(1f);
+        itemView.setTranslationY(0f);
       }
     }
   }

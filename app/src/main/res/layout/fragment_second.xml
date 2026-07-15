@@ -8,8 +8,9 @@
   tools:context=".SecondFragment">
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp">
+
     <TextView
       android:id="@+id/login_info"
       android:layout_width="wrap_content"
@@ -17,8 +18,9 @@
       android:text="TextView"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toTopOf="@+id/button_logout"
+      app:layout_constraintTop_toTopOf="parent"
       tools:layout_editor_absoluteY="16dp"/>
+
     <Button
       android:id="@+id/button_logout"
       android:layout_width="wrap_content"
@@ -27,30 +29,82 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/login_info"/>
-    <EditText
-      android:id="@+id/speedNumber"
-      android:layout_width="64dp"
+
+    <!-- Selected Speed dynamic label -->
+    <TextView
+      android:id="@+id/speed_label"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
-      android:ems="10"
-      android:inputType="number"
+      android:text="@string/speed_label_format"
+      android:textSize="16sp"
+      android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/button_logout"/>
+
+    <!-- Material Slider -->
+    <com.google.android.material.slider.Slider
+      android:id="@+id/speedSlider"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_marginHorizontal="24dp"
+      android:valueFrom="1.0"
+      android:valueTo="10.0"
+      android:stepSize="1.0"
+      android:value="5.0"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/speed_label"/>
+
+    <!-- Labels below Slider: Too Slow, Just Right, Too Fast -->
+    <TextView
+      android:id="@+id/label_slow"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/too_slow"
+      android:textSize="11sp"
+      android:textColor="?android:attr/textColorSecondary"
+      app:layout_constraintStart_toStartOf="@+id/speedSlider"
+      app:layout_constraintTop_toBottomOf="@+id/speedSlider" />
+
+    <TextView
+      android:id="@+id/label_just_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/just_right"
+      android:textSize="11sp"
+      android:textColor="?android:attr/textColorSecondary"
+      app:layout_constraintEnd_toEndOf="@+id/speedSlider"
+      app:layout_constraintStart_toStartOf="@+id/speedSlider"
+      app:layout_constraintTop_toBottomOf="@+id/speedSlider" />
+
+    <TextView
+      android:id="@+id/label_fast"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/too_fast"
+      android:textSize="11sp"
+      android:textColor="?android:attr/textColorSecondary"
+      app:layout_constraintEnd_toEndOf="@+id/speedSlider"
+      app:layout_constraintTop_toBottomOf="@+id/speedSlider" />
+
     <Button
       android:id="@+id/submitButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="20dp"
       android:text="@string/submit_speed"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/speedNumber"/>
+      app:layout_constraintTop_toBottomOf="@id/label_just_right"/>
 
     <androidx.core.widget.NestedScrollView
       android:id="@+id/historyScrollView"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
       app:layout_constraintTop_toBottomOf="@id/submitButton"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
@@ -64,12 +118,9 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-
       </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

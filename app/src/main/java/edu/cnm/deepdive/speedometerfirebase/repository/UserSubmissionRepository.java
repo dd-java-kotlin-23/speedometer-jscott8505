@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import edu.cnm.deepdive.speedometerfirebase.model.UserSubmission;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -35,12 +36,16 @@ public class UserSubmissionRepository {
 
   public LiveData<List<UserSubmission>> getAllSubmissions() {
     MutableLiveData<List<UserSubmission>> liveData = new MutableLiveData<>();
-    submissionCollection.addSnapshotListener((snapshot, error) -> {
-      if (error != null) {
-        return;
-      }
-      liveData.postValue(snapshot.toObjects(UserSubmission.class));
-    });
+    submissionCollection
+        .orderBy("timestamp", Query.Direction.DESCENDING)
+        .addSnapshotListener((snapshot, error) -> {
+          if (error != null) {
+            return;
+          }
+          if (snapshot != null) {
+            liveData.postValue(snapshot.toObjects(UserSubmission.class));
+          }
+        });
     return liveData;
   }
 

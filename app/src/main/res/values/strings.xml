@@ -13,4 +13,16 @@
   <string name="logged_in_as">Logged in as: %s</string>
   <string name="submit_speed">Submit Speed</string>
   <string name="speed_format">%1$d mph</string>
+  <string name="too_slow">Too Slow</string>
+  <string name="just_right">Just Right</string>
+  <string name="too_fast">Too Fast</string>
+  <string name="slow">Slow</string>
+  <string name="fast">Fast</string>
+  <string name="speed_label_format">Selected Speed: %1$s</string>
+  <string name="speed_description_too_slow">Too Slow (1)</string>
+  <string name="speed_description_slow">Slow (%1$d)</string>
+  <string name="speed_description_just_right">Just Right (5)</string>
+  <string name="speed_description_fast">Fast (%1$d)</string>
+  <string name="speed_description_too_fast">Too Fast (10)</string>
+  <string name="speed_history_format">Speed: %1$d/10 (%2$s)</string>
 </resources>

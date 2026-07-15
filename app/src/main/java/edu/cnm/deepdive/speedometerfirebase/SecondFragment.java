@@ -51,17 +51,45 @@ public class SecondFragment extends Fragment {
       secondFragmentViewModel.signOut();
     });
 
+    // Set up initial speed label
+    updateSpeedLabel((int) binding.speedSlider.getValue());
+
+    // Update speed label dynamically when the slider value changes
+    binding.speedSlider.addOnChangeListener((slider, value, fromUser) -> {
+      updateSpeedLabel((int) value);
+    });
+
     SubmissionAdapter adapter = new SubmissionAdapter(requireContext());
     binding.historyRecyclerView.setAdapter(adapter);
 
     secondFragmentViewModel.getAllSubmissions().observe(getViewLifecycleOwner(), (userSubmissions) -> {
-      adapter.submitList(userSubmissions);
+      adapter.submitList(userSubmissions, () -> {
+        if (userSubmissions != null && !userSubmissions.isEmpty()) {
+          binding.historyRecyclerView.scrollToPosition(0);
+        }
+      });
     });
 
     binding.submitButton.setOnClickListener((v) -> {
-      int speedValue = Integer.parseInt(binding.speedNumber.getText().toString());
+      int speedValue = (int) binding.speedSlider.getValue();
       secondFragmentViewModel.addSubmission(speedValue);
     });
+  }
+
+  private void updateSpeedLabel(int value) {
+    String description;
+    if (value == 1) {
+      description = getString(R.string.speed_description_too_slow);
+    } else if (value < 5) {
+      description = getString(R.string.speed_description_slow, value);
+    } else if (value == 5) {
+      description = getString(R.string.speed_description_just_right);
+    } else if (value < 10) {
+      description = getString(R.string.speed_description_fast, value);
+    } else {
+      description = getString(R.string.speed_description_too_fast);
+    }
+    binding.speedLabel.setText(getString(R.string.speed_label_format, description));
   }
 
   @Override

@@ -11,12 +11,11 @@
     android:id="@+id/speed_value"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="20sp"
+    android:textSize="18sp"
     android:textStyle="bold"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    tools:text="45 mph"/>
+    tools:text="Speed: 5/10 (Just Right)"/>
 
   <TextView
     android:id="@+id/submission_timestamp"
@@ -26,7 +25,20 @@
     android:textSize="12sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/speed_bar"
     tools:text="July 15, 2026, 3:30 PM"/>
+
+  <ProgressBar
+    android:id="@+id/speed_bar"
+    style="?android:attr/progressBarStyleHorizontal"
+    android:layout_width="0dp"
+    android:layout_height="8dp"
+    android:layout_marginTop="8dp"
+    android:max="10"
+    android:progress="5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/speed_value"
+    app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
